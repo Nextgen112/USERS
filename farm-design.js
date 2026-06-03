@@ -17,7 +17,7 @@
     }
 
     function drawUI(){
-        let s = '<h3>🛸 NEXUS COMPAT CONTROL</h3>';
+        let s = '<h3>🛸 NEXUS SYSTEM HUB</h3>';
         s += '<div id="wcf_st" class="wcf-panel" style="text-align:center;color:#4ade80;font-weight:bold;">Ready</div>';
         s += '<button id="nexus_scan" class="wcf-btn wcf-btn-blue">📡 RUN SECTOR SCAN</button>';
         s += '<div class="wcf-panel"><div class="wcf-row" style="border:none;"><b>🎯 Mode:</b> <select id="wcf_mode" class="wcf-input" style="width:60%;"><option value="spread">Spread</option><option value="swarm">Swarm</option></select></div><div class="wcf-row" style="border:none;"><b>🔢 Max Atk:</b> <input id="wcf_hc" type="number" value="30" class="wcf-input" style="width:60%;"></div></div>';
