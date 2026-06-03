@@ -17,9 +17,9 @@
     }
 
     function generateDisplayPanel(){
-        let s = '<h3>🛸 NEXUS AUTOMATION</h3>';
+        let s = '<h3>🛸 ECO NEXUS HUB</h3>';
         s += '<div id="wcf_st" class="wcf-panel" style="text-align:center;color:#4ade80;font-weight:bold;font-size:11px;">Idle</div>';
-        s += '<button id="nexus_scan" class="wcf-btn wcf-btn-blue">📡 RUN SECTOR SCAN</button>';
+        s += '<button id="nexus_scan" class="wcf-btn wcf-btn-blue">📡 RUN ECO SCAN</button>';
         s += '<div class="wcf-panel"><div class="wcf-row" style="border:none;"><b>🎯 Formation:</b> <select id="wcf_mode" class="wcf-input" style="width:60%;"><option value="spread">Spread Matrix</option><option value="swarm">Swarm Matrix</option></select></div><div class="wcf-row" style="border:none;"><b>🔢 Max Operations:</b> <input id="wcf_hc" type="number" value="30" class="wcf-input" style="width:60%;"></div></div>';
         s += '<div class="wcf-panel"><b>📦 Cataloged Targets:</b><div id="wcf_fb" class="wcf-scroll"></div></div>';
         s += '<div class="wcf-panel"><b>🎯 Dispatched Targets:</b><div id="wcf_tb" class="wcf-scroll"></div></div>';
@@ -34,25 +34,37 @@
         D.getElementById('nexus_hide').onclick = () => mainContainer.style.display = 'none';
     }
 
-    window.__wcfRefreshUI = function() { updateTargetInterface(); updateScannerInterface(); };
+    let uiUpdatePending = false;
+    window.__wcfRefreshUI = function() {
+        if (uiUpdatePending || mainContainer.style.display === 'none') return;
+        uiUpdatePending = true;
+        requestAnimationFrame(() => { 
+            updateTargetInterface();
+            updateScannerInterface();
+            uiUpdatePending = false;
+        });
+    };
 
     function refreshTeamLayout(){
-        let p = auto.cP(), h = '';
-        let displayPanel = D.getElementById('wcf_pl');
-        if(!displayPanel) return;
-        if(!p.length){ displayPanel.innerHTML = '<i style="color:#ef4444;">No operational divisions!</i>'; return; }
-        let cfg = JSON.parse(localStorage.getItem('wcf_p_cfg') || '{}');
-        let activePlats = auto.getAP();
-        
-        p.forEach(x => {
-            let checkedState = activePlats.includes(String(x.id)) ? 'checked' : '';
-            let filterVal = cfg[x.id] || '';
-            h += `<div class="wcf-row"><label style="cursor:pointer;flex-grow:1;overflow:hidden;text-overflow:ellipsis;"><input type="checkbox" class="p_chk" value="${x.id}" ${checkedState} style="margin-right:3px;"> ${x.n} ${x.atk ? '🔴' : x.mov ? '🟡' : ''}</label><input type="text" placeholder="All" value="${filterVal}" class="wcf-input team-filter" data-id="${x.id}" style="width:45px;padding:2px;"></div>`;
-        });
-        displayPanel.innerHTML = h;
+        if (mainContainer.style.display === 'none') return;
+        requestAnimationFrame(() => {
+            let p = auto.cP(), h = '';
+            let displayPanel = D.getElementById('wcf_pl');
+            if(!displayPanel) return;
+            if(!p.length){ displayPanel.innerHTML = '<i style="color:#ef4444;">No operational divisions!</i>'; return; }
+            let cfg = JSON.parse(localStorage.getItem('wcf_p_cfg') || '{}');
+            let activePlats = auto.getAP();
+            
+            p.forEach(x => {
+                let checkedState = activePlats.includes(String(x.id)) ? 'checked' : '';
+                let filterVal = cfg[x.id] || '';
+                h += `<div class="wcf-row"><label style="cursor:pointer;flex-grow:1;overflow:hidden;text-overflow:ellipsis;"><input type="checkbox" class="p_chk" value="${x.id}" ${checkedState} style="margin-right:3px;"> ${x.n} ${x.atk ? '🔴' : x.mov ? '🟡' : ''}</label><input type="text" placeholder="All" value="${filterVal}" class="wcf-input team-filter" data-id="${x.id}" style="width:45px;padding:2px;"></div>`;
+            });
+            displayPanel.innerHTML = h;
 
-        D.querySelectorAll('.p_chk').forEach(el => el.onchange = saveTeamSelections);
-        D.querySelectorAll('.team-filter').forEach(el => el.oninput = function() { saveIndividualFilter(this.dataset.id, this.value); });
+            D.querySelectorAll('.p_chk').forEach(el => el.onchange = saveTeamSelections);
+            D.querySelectorAll('.team-filter').forEach(el => el.oninput = function() { saveIndividualFilter(this.dataset.id, this.value); });
+        });
     }
 
     function saveIndividualFilter(pid, val){
@@ -161,5 +173,5 @@
     }
 
     generateDisplayPanel(); refreshTeamLayout(); window.__wcfRefreshUI();
-    auto.uS('Automation Core Loaded Engine', '#38bdf8');
+    auto.uS('Low-CPU Framework Active', '#38bdf8');
 })();
