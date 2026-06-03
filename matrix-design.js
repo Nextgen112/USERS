@@ -78,7 +78,12 @@
                     batchDeployButton.disabled = true; batchDeployButton.textContent = "Deploying Cluster Nodes...";
                     for (var i = 0; i < activeDataset.length; i++) {
                         var operationalSkus = (st === "sectorbreachstore") ? core.resolveSectorCandidates(activeDataset[i]) : [core.buildSkuString(st, activeDataset[i])];
-                        for (var j = 0; j < operationalSkus.length; j++) { if (operationalSkus[j]) { await core.executePurchase(operationalSkus[j]); await core.delay(850) } }
+                        for (var j = 0; j < operationalSkus.length; j++) { 
+                            if (operationalSkus[j]) { 
+                                await core.executePurchase(operationalSkus[j]); 
+                                await core.delay(500); // ⚡ Changed to fast 500ms sleep loop
+                            } 
+                        }
                     }
                     batchDeployButton.disabled = false; batchDeployButton.textContent = "⚡ Batch Deploy Sector Assets";
                 };
