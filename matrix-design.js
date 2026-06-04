@@ -18,7 +18,7 @@
     }
     
     // Refresh the inner structure cleanly
-    structuralWrapper.innerHTML = '<div class="wcpanel" id="wcp"><div class="wcclose" id="wcX">✕</div><div class="wctitle">Next Generation Hackers</div><div class="search-bar" id="searchBar"><input type="text" id="quickSearchInput" placeholder="Search operational matrices..."><button id="quickSearchBtn">DEPLOY</button></div><div class="wctabs" id="wctabs"></div><div id="wccontent"></div><div class="wclog" id="wclog"></div></div>';
+    structuralWrapper.innerHTML = '<div class="wcpanel" id="wcp"><div class="wcclose" id="wcX">✕</div><div class="wctitle">NEXUS CONTROL HUB</div><div class="search-bar" id="searchBar"><input type="text" id="quickSearchInput" placeholder="Search operational matrices..."><button id="quickSearchBtn">DEPLOY</button></div><div class="wctabs" id="wctabs"></div><div id="wccontent"></div><div class="wclog" id="wclog"></div></div>';
 
     window.NEXUS_LOG_PANEL = D.getElementById("wclog");
     var searchInput = D.getElementById("quickSearchInput");
