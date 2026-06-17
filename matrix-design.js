@@ -1,10 +1,3 @@
-The game's underlying asset loader (`WarCommander.js` / Kixeye's framework) runs custom injection routines that can choke on modern JavaScript template literals (those backticks ``` used for multi-line text). When the framework tries to parse or evaluate the file, it misinterprets the spacing and throws that `Unexpected string` syntax error.
-
-To completely bypass the game's older loader quirks, the script below converts the design code into a completely flat, ultra-safe, single-line string asset. This keeps all the anti-lag optimizations and visual updates but packages them in a format the game framework will accept.
-
-### Clean & Compatible Script
-
-javascript
 (function() { 
     const D = document; 
     const core = window.NexusCore; 
